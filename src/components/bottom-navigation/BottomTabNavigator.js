@@ -2,7 +2,7 @@ import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 // import HomeScreen from './HomeScreen';
 // import SettingsScreen from './SettingsScreen';
-import Icon from "react-native-vector-icons/FontAwesome"; // Importing FontAwesome icons
+import Icon from "react-native-vector-icons/AntDesign"; // Importing FontAwesome icons
 import Settings from "../pages/settings";
 import { StyleSheet, Text, View, ScrollView } from "react-native";
 import Home from "../pages/home";
