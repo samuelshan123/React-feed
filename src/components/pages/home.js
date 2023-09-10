@@ -18,7 +18,8 @@ export default function Home() {
   const fetchData = async () => {
     try {
       setLoading(true);
-      let res = await axios.get("http://192.168.1.38:3000/getnews");
+      let res = await axios.get("http://192.168.1.40:3000/getnews");
+      console.log(res.data);
       if (res.data.code === 1) {
         setDATA(res.data.news);
       } else {

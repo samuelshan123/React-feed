@@ -15,23 +15,30 @@ import React, { useState } from "react";
 import axios from "axios";
 import Toast from "react-native-toast-message";
 import showToast from "../utilities/Toast";
+import {launchImageLibrary} from 'react-native-image-picker';
 
 export default function CreateNews() {
   const [text, onChangeText] = React.useState("");
   const [image, setImage] = useState(null);
 
   const pickImage = async () => {
-    // let result = await ImagePicker.launchImageLibraryAsync({
-    //   mediaTypes: ImagePicker.MediaTypeOptions.All,
-    //   // allowsEditing: true,
-    //   // aspect: [4, 3],
-    //   quality: 0.1, // Compress the image (0: lowest quality, 1: highest quality)
-    //   base64: true, // Return the image in base64 format
-    // });
+    const options = {
+      mediaType: 'photo',
+      includeBase64: true,
+      maxHeight: 2000,
+      maxWidth: 2000,
+    };
 
-    // if (!result.canceled) {
-    //   setImage(`data:image/png;base64,${result.assets[0].base64}`);
-    // }
+    launchImageLibrary(options, (response) => {
+      if (response.didCancel) {
+        console.log('User cancelled image picker');
+      } else if (response.error) {
+        console.log('Image picker error: ', response.error);
+      } else {
+        let imageUri = response.uri || response.assets?.[0]?.uri;
+        setImage(imageUri);
+      }
+    });
   };
 
   //switch
@@ -46,7 +53,7 @@ export default function CreateNews() {
       role: "author",
     };
     try {
-      let res = await axios.post("http://192.168.1.38:3000/create", payload);
+      let res = await axios.post("http://192.168.1.40:3000/create", payload);
       console.log(res.data);
       if (res.data.code === 0) {
         showToast("error", "Error", "Error creating post");
